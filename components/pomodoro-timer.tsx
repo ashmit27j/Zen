@@ -80,7 +80,7 @@ export function PomodoroTimer({ isFullscreen, setIsFullscreen, showQuote, setSho
                 strokeDasharray={circumference}
                 strokeDashoffset={dashOffset}
                 className={`
-                  ${timerMode === "focus" ? "text-rose-500 dark:text-rose-400" : ""}
+                  ${timerMode === "focus" ? "text-purple-500 dark:text-purple-400" : ""}
                   ${timerMode === "shortBreak" ? "text-emerald-500 dark:text-emerald-400" : ""}
                   ${timerMode === "longBreak" ? "text-blue-500 dark:text-blue-400" : ""}
                   transition-all duration-1000 ease-linear
@@ -108,7 +108,7 @@ export function PomodoroTimer({ isFullscreen, setIsFullscreen, showQuote, setSho
               size="lg"
               className={`rounded-full w-12 h-12 ${
                 timerMode === "focus"
-                  ? "bg-rose-500 hover:bg-rose-600"
+                  ? "bg-purple-500 hover:bg-purple-600"
                   : timerMode === "shortBreak"
                     ? "bg-emerald-500 hover:bg-emerald-600"
                     : "bg-blue-500 hover:bg-blue-600"
