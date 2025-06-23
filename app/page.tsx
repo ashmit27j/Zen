@@ -12,7 +12,7 @@ import { TimerProvider } from "@/context/timer-context"
 import { TaskProvider } from "@/context/task-context"
 import { ThemeProvider } from "next-themes";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
-
+	
 function AppContent() {
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const [showQuote, setShowQuote] = useState(false);
