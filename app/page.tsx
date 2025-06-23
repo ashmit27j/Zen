@@ -106,8 +106,11 @@ function AppContent() {
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 transition-colors duration-300">
 			{!isFullscreen && <Header />}
-			{!isFullscreen && <TopBar />} {/* ✅ Added TopBar here */}
-			<main className="container mx-auto px-4 py-8">
+
+			{/* ✅ Wrap ALL components inside one container div */}
+			<div className="container mx-auto px-4 py-8 space-y-6">
+				{!isFullscreen && <TopBar />}
+
 				<div
 					className={`grid gap-6 ${
 						isFullscreen ? "" : "md:grid-cols-2 lg:grid-cols-3"
@@ -148,10 +151,11 @@ function AppContent() {
 				</div>
 
 				{showQuote && isFullscreen && <MotivationalQuote />}
-			</main>
+			</div>
 		</div>
 	);
 }
+
 
 export default function Home() {
 	return (
