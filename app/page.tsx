@@ -104,7 +104,9 @@ function AppContent() {
 	useKeyboardShortcuts();
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 transition-colors duration-300">
+		<div
+			className="min-h-screen bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-background dark:to-[#0a0a0a] transition-colors duration-300"
+		>
 			{!isFullscreen && <Header />}
 
 			{/* ✅ Wrap ALL components inside one container div */}

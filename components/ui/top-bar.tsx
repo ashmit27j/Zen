@@ -43,38 +43,45 @@ export function TopBar() {
 	return (
 		<div className="w-full flex justify-between items-center px-6 py-4">
 			{/* Left: Quick Links */}
-			<div className="flex items-center gap-4">
+			<div className="flex items-center gap-3">
 				{links.map((link, index) => (
 					<a
 						key={index}
 						href={link.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="flex flex-col items-center text-xs gap-1 px-2 py-1 hover:bg-zinc-800 rounded transition"
+						className="w-16 h-16 flex flex-col items-center justify-center rounded-md transition-colors duration-200 bg-zinc-900 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700"
 					>
 						<img
 							src={`https://www.google.com/s2/favicons?domain=${link.url}&sz=64`}
 							alt={link.title}
-							className="w-8 h-8 rounded"
+							className="w-6 h-6 mb-1"
 						/>
-						<span className="text-zinc-300">{link.title}</span>
+						<span className="text-[10px] text-center text-zinc-700 dark:text-zinc-300">
+							{link.title}
+						</span>
 					</a>
 				))}
-				<Button variant="ghost" size="icon" onClick={() => setShowDialog(true)}>
+				<Button
+					variant="ghost"
+					size="icon"
+					onClick={() => setShowDialog(true)}
+					className="w-16 h-16 flex items-center justify-center rounded-md bg-zinc-900 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+				>
 					<Plus className="w-5 h-5 text-zinc-400" />
 				</Button>
 			</div>
 
-			{/* Right: Current Time */}
-			<div className="text-3xl font-semibold text-zinc-300 tracking-wide">
+			{/* Right: Time */}
+			<div className="text-3xl font-semibold text-zinc-700 dark:text-zinc-300 tracking-wide">
 				{time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
 			</div>
 
 			{/* Modal Dialog */}
 			<Dialog open={showDialog} onOpenChange={setShowDialog}>
-				<DialogContent className="bg-zinc-900 text-zinc-200 border border-zinc-700">
+				<DialogContent className="bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 border border-zinc-300 dark:border-zinc-700">
 					<DialogHeader>
-						<DialogTitle>Edit Site</DialogTitle>
+						<DialogTitle>Add New Site</DialogTitle>
 					</DialogHeader>
 					<div className="flex flex-col gap-4">
 						<Input
