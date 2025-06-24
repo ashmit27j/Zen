@@ -21,9 +21,7 @@ function AppContent() {
 	useKeyboardShortcuts();
 
 	return (
-		<div
-			className="min-h-screen bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-background dark:to-[#0a0a0a] transition-colors duration-300"
-		>
+		<div className="min-h-screen bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-background dark:to-[#0a0a0a] transition-colors duration-300">
 			{!isFullscreen && <Header />}
 
 			{/* ✅ Wrap ALL components inside one container div */}
@@ -38,8 +36,8 @@ function AppContent() {
 					<div
 						className={`${
 							isFullscreen
-								? "flex justify-center items-center min-h-[80vh]"
-								: "lg:col-span-1"
+								? "flex justify-center items-center min-h-[100vh]"
+								: "lg:col-span-1 flex flex-col h-full w-full"
 						}`}
 					>
 						<PomodoroTimer

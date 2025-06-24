@@ -40,9 +40,9 @@ export function PomodoroTimer({ isFullscreen, setIsFullscreen, showQuote, setSho
 
   return (
 		<Card
-			className={` bg-gradient-to-br from-zinc-50 via-zinc-95 to-zinc-160 dark:from-[#121212] dark:via-[#171717] dark:to-[#19191a] w-full max-w-md mx-auto ${
-				isFullscreen ? "scale-125" : ""
-			} transition-all duration-300`}
+			className={`h-full w-full bg-gradient-to-br from-zinc-50 via-zinc-95 to-zinc-160 dark:from-[#121212] dark:via-[#171717] dark:to-[#19191a] p-0 transition-all duration-300 ${
+				isFullscreen ? "max-w-3xl scale-110" : "max-w-full"
+			} mx-0`}
 		>
 			<CardContent className="pt-6">
 				<div className="flex flex-col items-center">
