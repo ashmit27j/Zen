@@ -41,65 +41,64 @@ export function TopBar() {
 	};
 
 	return (
-		<div className="w-full flex justify-between items-center px-6 py-4">
-			{/* Left: Quick Links */}
-			<div className="flex items-center gap-3">
-				{links.map((link, index) => (
+		<div className="flex items-center gap-5">
+			{links.map((link, index) => (
+				<div key={index} className="flex flex-col items-center gap-1">
 					<a
-						key={index}
 						href={link.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="w-16 h-16 flex flex-col items-center justify-center rounded-md transition-colors duration-200 bg-zinc-900 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+						className="w-16 h-16 rounded-lg border bg-card text-card-foreground shadow-sm
+						bg-gradient-to-br from-zinc-50 via-zinc-100 to-zinc-200
+						dark:from-[#121212] dark:via-[#171717] dark:to-[#19191a]
+						flex items-center justify-center transition hover:brightness-95 dark:hover:brightness-110"
 					>
 						<img
 							src={`https://www.google.com/s2/favicons?domain=${link.url}&sz=64`}
 							alt={link.title}
-							className="w-6 h-6 mb-1"
+							className="w-7 h-7"
 						/>
-						<span className="text-[10px] text-center text-zinc-700 dark:text-zinc-300">
-							{link.title}
-						</span>
 					</a>
-				))}
-				<Button
-					variant="ghost"
-					size="icon"
+					<span className="text-xs text-zinc-700 dark:text-zinc-300">
+						{link.title}
+					</span>
+				</div>
+			))}
+
+			{/* Add Site Button */}
+			<div className="flex flex-col items-center gap-1">
+				<button
 					onClick={() => setShowDialog(true)}
-					className="w-16 h-16 flex items-center justify-center rounded-md bg-zinc-900 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+					className="w-16 h-16 rounded-lg border bg-card text-card-foreground shadow-sm
+					bg-gradient-to-br from-zinc-50 via-zinc-100 to-zinc-200
+					dark:from-[#121212] dark:via-[#171717] dark:to-[#19191a]
+					flex items-center justify-center transition hover:brightness-95 dark:hover:brightness-110"
 				>
-					<Plus className="w-5 h-5 text-zinc-400" />
-				</Button>
+					<Plus className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
+				</button>
+				<span className="text-xs text-zinc-700 dark:text-zinc-300">
+					Add site
+				</span>
 			</div>
 
-			{/* Right: Time */}
-			<div className="text-3xl font-semibold text-zinc-700 dark:text-zinc-300 tracking-wide">
-				{time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-			</div>
-
-			{/* Modal Dialog */}
+			{/* Dialog Box for Adding New Link */}
 			<Dialog open={showDialog} onOpenChange={setShowDialog}>
-				<DialogContent className="bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 border border-zinc-300 dark:border-zinc-700">
+				<DialogContent>
 					<DialogHeader>
-						<DialogTitle>Add New Site</DialogTitle>
+						<DialogTitle>Add a new site</DialogTitle>
 					</DialogHeader>
 					<div className="flex flex-col gap-4">
 						<Input
-							placeholder="Website title"
+							placeholder="Title (e.g. Twitter)"
 							value={newTitle}
 							onChange={(e) => setNewTitle(e.target.value)}
 						/>
 						<Input
-							placeholder="Website address"
+							placeholder="URL (e.g. https://twitter.com)"
 							value={newUrl}
 							onChange={(e) => setNewUrl(e.target.value)}
 						/>
-						<div className="flex justify-end gap-2">
-							<Button variant="ghost" onClick={() => setShowDialog(false)}>
-								Cancel
-							</Button>
-							<Button onClick={handleAddLink}>Save</Button>
-						</div>
+						<Button onClick={handleAddLink}>Add</Button>
 					</div>
 				</DialogContent>
 			</Dialog>

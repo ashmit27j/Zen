@@ -3,8 +3,8 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
-	title: "v0 App",
-	description: "Created with v0",
+	title: "Zen",
+	description: "Zen productivity App",
 	generator: "v0.dev",
 };
 

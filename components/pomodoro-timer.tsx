@@ -54,7 +54,7 @@ export function PomodoroTimer({ isFullscreen, setIsFullscreen, showQuote, setSho
 								setTimerMode(value as "focus" | "shortBreak" | "longBreak")
 							}
 						>
-							<TabsList className="grid grid-cols-3">
+							<TabsList className="grid grid-cols-3 ">
 								<TabsTrigger value="focus">Focus Time</TabsTrigger>
 								<TabsTrigger value="shortBreak">Short Break</TabsTrigger>
 								<TabsTrigger value="longBreak">Long Break</TabsTrigger>
