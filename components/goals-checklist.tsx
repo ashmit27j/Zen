@@ -43,65 +43,73 @@ export function GoalsChecklist() {
   }
 
   return (
-    <Card className="h-full">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-medium">Daily Goals</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex mb-3">
-          <Input
-            placeholder="Add a goal..."
-            value={newGoal}
-            onChange={(e) => setNewGoal(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") addGoal()
-            }}
-            className="mr-2"
-          />
-          <Button onClick={addGoal} size="icon">
-            <Plus className="h-4 w-4" />
-          </Button>
-        </div>
+		<Card className="h-full bg-gradient-to-br from-zinc-50 via-zinc-95 to-zinc-160 dark:from-[#121212] dark:via-[#171717] dark:to-[#19191a]">
+			<CardHeader className="pb-2">
+				<CardTitle className="text-xl font-medium">Daily Goals</CardTitle>
+			</CardHeader>
+			<CardContent>
+				<div className="flex mb-3">
+					<Input
+						placeholder="Add a goal..."
+						value={newGoal}
+						onChange={(e) => setNewGoal(e.target.value)}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") addGoal();
+						}}
+						className="mr-2"
+					/>
+					<Button onClick={addGoal} size="icon">
+						<Plus className="h-4 w-4" />
+					</Button>
+				</div>
 
-        <div className="space-y-2">
-          {goals.map((goal) => (
-            <div
-              key={goal.id}
-              className={`flex items-center p-2 rounded-md ${goal.completed ? "bg-zinc-50 dark:bg-zinc-800/50" : ""}`}
-            >
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`rounded-full p-0 w-5 h-5 mr-2 ${
-                  goal.completed
-                    ? "bg-emerald-500 text-white hover:bg-emerald-600 hover:text-white"
-                    : "border border-zinc-300 dark:border-zinc-600"
-                }`}
-                onClick={() => toggleGoal(goal.id)}
-              >
-                {goal.completed && <Check className="h-3 w-3" />}
-              </Button>
+				<div className="space-y-2">
+					{goals.map((goal) => (
+						<div
+							key={goal.id}
+							className={`flex items-center p-2 rounded-md ${
+								goal.completed ? "bg-zinc-50 dark:bg-zinc-800/50" : ""
+							}`}
+						>
+							<Button
+								variant="ghost"
+								size="sm"
+								className={`rounded-full p-0 w-5 h-5 mr-2 ${
+									goal.completed
+										? "bg-emerald-500 text-white hover:bg-emerald-600 hover:text-white"
+										: "border border-zinc-300 dark:border-zinc-600"
+								}`}
+								onClick={() => toggleGoal(goal.id)}
+							>
+								{goal.completed && <Check className="h-3 w-3" />}
+							</Button>
 
-              <span className={`flex-grow text-sm ${goal.completed ? "line-through text-zinc-400" : ""}`}>
-                {goal.text}
-              </span>
+							<span
+								className={`flex-grow text-sm ${
+									goal.completed ? "line-through text-zinc-400" : ""
+								}`}
+							>
+								{goal.text}
+							</span>
 
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => deleteGoal(goal.id)}
-                className="h-6 w-6 p-0 text-zinc-400 hover:text-red-500"
-              >
-                <Trash2 className="h-3 w-3" />
-              </Button>
-            </div>
-          ))}
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={() => deleteGoal(goal.id)}
+								className="h-6 w-6 p-0 text-zinc-400 hover:text-red-500"
+							>
+								<Trash2 className="h-3 w-3" />
+							</Button>
+						</div>
+					))}
 
-          {goals.length === 0 && (
-            <div className="text-center py-4 text-zinc-400 dark:text-zinc-500 text-sm">Add your goals for today</div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  )
+					{goals.length === 0 && (
+						<div className="text-center py-4 text-zinc-400 dark:text-zinc-500 text-sm">
+							Add your goals for today
+						</div>
+					)}
+				</div>
+			</CardContent>
+		</Card>
+	);
 }
