@@ -45,7 +45,9 @@ export function GoalsChecklist() {
   return (
 		<Card className="h-full bg-gradient-to-br from-zinc-50 via-zinc-95 to-zinc-160 dark:from-[#121212] dark:via-[#171717] dark:to-[#19191a]">
 			<CardHeader className="pb-2">
-				<CardTitle className="text-xl font-medium">Daily Goals</CardTitle>
+				<CardTitle className="text-xl font-medium tracking-normal">
+					Daily Goals
+				</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<div className="flex mb-3">
