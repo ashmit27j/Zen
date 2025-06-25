@@ -62,7 +62,7 @@ export function TaskManager() {
 						className="mr-2"
 					/>
 					<Button onClick={handleAddTask} size="icon">
-						<Plus className="h-4 w-4" />
+						<Plus className="h-4 w-4 flex-none"/>
 					</Button>
 				</div>
 
