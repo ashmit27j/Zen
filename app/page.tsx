@@ -57,8 +57,8 @@ function AppContent() {
 							<div className="md:col-span-2 lg:col-span-1">
 								<div className="grid gap-6">
 									<MusicPlayer />
-									<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-										<Notes />
+									<div className="">
+										{/* <Notes /> */}
 										<GoalsChecklist />
 									</div>
 								</div>
