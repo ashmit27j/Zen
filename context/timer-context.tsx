@@ -58,39 +58,26 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
 					audioRef.current?.pause();
 					audioRef.current.currentTime = 0;
 				})
-				.catch((err) => console.log("Unlock failed", err));
+				.catch(() => {});
 		}
 	};
 
 	const startTimer = () => {
-		unlockAudio(); // ✅ Unlock audio on first interaction
+		unlockAudio();
 		setIsActive(true);
 	};
 
 	useEffect(() => {
 		if (isActive && timeLeft === 0 && audioRef.current) {
 			audioRef.current.currentTime = 0;
-			audioRef.current
-				.play()
-				.catch((err) => console.error("Playback failed:", err));
+			audioRef.current.play().catch(() => {});
 		}
 	}, [isActive, timeLeft]);
 
-	// ✅ Preload audio
-	useEffect(() => {
-		if (typeof window !== "undefined") {
-			const audio = new Audio("/notification.mp3");
-			audio.load();
-			audioRef.current = audio;
-		}
-	}, []);
-
-	// ✅ Reset sessions if it's a new day
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			const lastDate = localStorage.getItem("zen-last-date");
 			const today = new Date().toDateString();
-
 			if (lastDate !== today) {
 				setSessionsToday(0);
 				localStorage.setItem("zen-last-date", today);
@@ -98,13 +85,11 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
 		}
 	}, []);
 
-	// ✅ Save session counts
 	useEffect(() => {
 		localStorage.setItem("zen-sessions-today", JSON.stringify(sessionsToday));
 		localStorage.setItem("zen-total-sessions", JSON.stringify(totalSessions));
 	}, [sessionsToday, totalSessions]);
 
-	// ✅ Timer countdown
 	useEffect(() => {
 		let interval: NodeJS.Timeout | null = null;
 
@@ -120,21 +105,38 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
 				setTotalSessions((prev: number) => prev + 1);
 			}
 
-			// ✅ Play sound safely
 			if (audioRef.current) {
 				audioRef.current.currentTime = 0;
-				audioRef.current
-					.play()
-					.catch((err) => console.error("Playback failed:", err));
+				audioRef.current.play().catch(() => {});
 			}
+
+			setTimeout(() => {
+				if (timerMode === "focus") {
+					setTimerMode("shortBreak");
+					setTimeLeft(shortBreakDuration * 60);
+				} else if (timerMode === "shortBreak") {
+					setTimerMode("longBreak");
+					setTimeLeft(longBreakDuration * 60);
+				} else {
+					setTimerMode("focus");
+					setTimeLeft(focusDuration * 60);
+				}
+				setIsActive(true);
+			}, 500);
 		}
 
 		return () => {
 			if (interval) clearInterval(interval);
 		};
-	}, [isActive, timeLeft, timerMode]);
+	}, [
+		isActive,
+		timeLeft,
+		timerMode,
+		focusDuration,
+		shortBreakDuration,
+		longBreakDuration,
+	]);
 
-	// ✅ Update duration when mode or settings change
 	useEffect(() => {
 		let newTime;
 		if (timerMode === "focus") {
@@ -145,18 +147,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
 			newTime = longBreakDuration * 60;
 		}
 		setTimeLeft(newTime);
-		setIsActive(false);
 	}, [timerMode, focusDuration, shortBreakDuration, longBreakDuration]);
-
-	// const startTimer = () => {
-	// 	// 🔑 Unlock audio playback on first click
-	// 	if (audioRef.current) {
-	// 		const audio = audioRef.current;
-	// 		audio.currentTime = 0;
-	// 		audio.play().catch((err) => console.error("Playback failed:", err));
-	// 	}
-	// 	setIsActive(true);
-	// };
 
 	const pauseTimer = () => setIsActive(false);
 
@@ -168,7 +159,6 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
 		} else {
 			setTimeLeft(longBreakDuration * 60);
 		}
-		setIsActive(false);
 	};
 
 	return (
