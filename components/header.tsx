@@ -1,50 +1,14 @@
 "use client";
 
-import {
-	Moon,
-	Sun,
-	Settings,
-	Volume2,
-	VolumeX,
-	X,
-	Cog,
-	Clock,
-	CheckSquare,
-	Music2,
-} from "lucide-react";
-import { useTheme } from "next-themes";
+import { Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useState } from "react";
-import { useSettings } from "@/context/settings-context";
-
-import { cn } from "@/lib/utils"; // Optional: for merging classes
-
-const settingsTabs = [
-	{ key: "general", label: "General", icon: Cog },
-	{ key: "pomodoro", label: "Pomodoro", icon: Clock },
-	{ key: "tasks", label: "Tasks", icon: CheckSquare },
-	{ key: "music", label: "Music", icon: Music2 },
-];
+import MuteToggle from "./muteToggle";
+import ThemeToggle from "./themeToggle";
+import SettingsDialog from "./settingsDialog";
 
 export function Header() {
-	const { theme, setTheme } = useTheme();
-	const [muted, setMuted] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
-	const [activeTab, setActiveTab] = useState("general");
-
-	const handleMuteToggle = () => {
-		setMuted((prev) => !prev);
-	};
-	const {
-		focusDuration,
-		shortBreakDuration,
-		longBreakDuration,
-		setFocusDuration,
-		setShortBreakDuration,
-		setLongBreakDuration,
-	} = useSettings();
-	
 
 	return (
 		<>
@@ -55,32 +19,8 @@ export function Header() {
 					</h1>
 
 					<div className="flex items-center gap-2">
-						{/* Mute Toggle */}
-						<Button
-							variant="ghost"
-							size="icon"
-							onClick={handleMuteToggle}
-							aria-label="Toggle mute"
-						>
-							{muted ? (
-								<VolumeX className="h-5 w-5" />
-							) : (
-								<Volume2 className="h-5 w-5" />
-							)}
-						</Button>
-
-						{/* Theme Toggle */}
-						<Button
-							variant="ghost"
-							size="icon"
-							onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-							aria-label="Toggle theme"
-						>
-							<Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-							<Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-						</Button>
-
-						{/* Settings */}
+						<MuteToggle />
+						<ThemeToggle />
 						<Button
 							variant="ghost"
 							size="icon"
@@ -93,127 +33,7 @@ export function Header() {
 				</div>
 			</header>
 
-			{/* Settings Modal */}
-			<Dialog open={showSettings} onOpenChange={setShowSettings}>
-				<DialogContent className="max-w-4xl p-0 overflow-hidden">
-					{/* Close */}
-					<div className="flex justify-end p-4 border-b">
-						<Button
-							variant="ghost"
-							size="icon"
-							onClick={() => setShowSettings(false)}
-							aria-label="Close settings"
-						>
-							<X className="h-5 w-5" />
-						</Button>
-					</div>
-
-					<div className="flex h-[500px]">
-						{/* Sidebar with Icons */}
-						<aside className="w-56 border-r bg-muted/40 p-4 space-y-2">
-							{settingsTabs.map(({ key, label, icon: Icon }) => (
-								<Button
-									key={key}
-									variant={activeTab === key ? "secondary" : "ghost"}
-									className="w-full justify-start gap-2 capitalize"
-									onClick={() => setActiveTab(key)}
-								>
-									<Icon className="w-4 h-4" />
-									{label}
-								</Button>
-							))}
-						</aside>
-
-						{/* Content Panel */}
-						<section className="flex-1 p-6 overflow-y-auto">
-							{activeTab === "general" && (
-								<div>
-									<h2 className="text-lg font-medium mb-4">General Settings</h2>
-									<ul className="space-y-2 text-sm">
-										<li>🌓 Theme toggle</li>
-										<li>🔊 Mute toggle</li>
-										<li>📦 Local storage reset</li>
-									</ul>
-								</div>
-							)}
-							{activeTab === "pomodoro" && (
-								<div>
-									<h2 className="text-lg font-medium mb-4">
-										Pomodoro Settings
-									</h2>
-									<div className="space-y-4 text-sm">
-										<label className="block">
-											⏱️ Focus duration (minutes)
-											<input
-												type="number"
-												className="mt-1 w-full bg-background border rounded px-2 py-1"
-												value={focusDuration}
-												onChange={(e) =>
-													setFocusDuration(Number(e.target.value))
-												}
-											/>
-										</label>
-
-										<label className="block">
-											☕ Short break duration
-											<input
-												type="number"
-												className="mt-1 w-full bg-background border rounded px-2 py-1"
-												value={shortBreakDuration}
-												onChange={(e) =>
-													setShortBreakDuration(Number(e.target.value))
-												}
-											/>
-										</label>
-
-										<label className="block">
-											🎯 Long break duration
-											<input
-												type="number"
-												className="mt-1 w-full bg-background border rounded px-2 py-1"
-												value={longBreakDuration}
-												onChange={(e) =>
-													setLongBreakDuration(Number(e.target.value))
-												}
-											/>
-										</label>
-									</div>
-								</div>
-							)}
-							{activeTab === "tasks" && (
-								<div>
-									<h2 className="text-lg font-medium mb-4">Task Settings</h2>
-									<ul className="space-y-2 text-sm">
-										<li>📌 Priority system (Low, Med, High)</li>
-										<li>🗂️ Categories or Labels</li>
-										<li>📅 Due date reminders</li>
-									</ul>
-								</div>
-							)}
-							{activeTab === "music" && (
-								<div>
-									<h2 className="text-lg font-medium mb-4">
-										Music Player Settings
-									</h2>
-									<ul className="space-y-2 text-sm">
-										<li>🎼 Playlist style: Shuffle / Loop</li>
-										<li>🔊 Volume control</li>
-										<li>🎧 Music source: Local / External</li>
-									</ul>
-								</div>
-							)}
-						</section>
-					</div>
-
-					{/* Footer */}
-					<div className="flex justify-end gap-2 border-t p-4">
-						<Button variant="ghost" onClick={() => setShowSettings(false)}>
-							Discard changes
-						</Button>
-						<Button onClick={() => setShowSettings(false)}>Save</Button>
-					</div>
-				</DialogContent>
-			</Dialog>
+			<SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
 		</>
 	);
 }
