@@ -5,8 +5,8 @@ import { Header } from "@/components/header";
 import { PomodoroTimer } from "@/components/pomodoro-timer";
 import { TaskManager } from "@/components/task-manager";
 import { MusicPlayer } from "@/components/music-player";
-import { Notes } from "@/components/notes";
-import { GoalsChecklist } from "@/components/goals-checklist";
+// import { Notes } from "@/components/notes";
+// import { GoalsChecklist } from "@/components/goals-checklist";
 // import { MotivationalQuote } from "@/components/motivational-quote";
 import { TimerProvider } from "@/context/timer-context";
 import { TaskProvider } from "@/context/task-context";
@@ -15,6 +15,7 @@ import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { TopBar } from "@/components/ui/top-bar";
 import { Infinity } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SettingsProvider } from "@/context/settings-context";
 
 function AppContent() {
 	const [isFullscreen, setIsFullscreen] = useState(false);
@@ -86,11 +87,13 @@ function AppContent() {
 export default function Home() {
 	return (
 		<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-			<TimerProvider>
-				<TaskProvider>
-					<AppContent />
-				</TaskProvider>
-			</TimerProvider>
+			<SettingsProvider>
+				<TimerProvider>
+					<TaskProvider>
+						<AppContent />
+					</TaskProvider>
+				</TimerProvider>
+			</SettingsProvider>
 		</ThemeProvider>
 	);
 }

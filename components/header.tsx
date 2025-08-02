@@ -16,6 +16,8 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useState } from "react";
+import { useSettings } from "@/context/settings-context";
+
 import { cn } from "@/lib/utils"; // Optional: for merging classes
 
 const settingsTabs = [
@@ -34,6 +36,15 @@ export function Header() {
 	const handleMuteToggle = () => {
 		setMuted((prev) => !prev);
 	};
+	const {
+		focusDuration,
+		shortBreakDuration,
+		longBreakDuration,
+		setFocusDuration,
+		setShortBreakDuration,
+		setLongBreakDuration,
+	} = useSettings();
+	
 
 	return (
 		<>
@@ -130,12 +141,43 @@ export function Header() {
 									<h2 className="text-lg font-medium mb-4">
 										Pomodoro Settings
 									</h2>
-									<ul className="space-y-2 text-sm">
-										<li>⏱️ Focus duration: 25 mins</li>
-										<li>☕ Break duration: 5 mins</li>
-										<li>🎯 Long break: 15 mins</li>
-										<li>🔁 Auto start next cycle: On/Off</li>
-									</ul>
+									<div className="space-y-4 text-sm">
+										<label className="block">
+											⏱️ Focus duration (minutes)
+											<input
+												type="number"
+												className="mt-1 w-full bg-background border rounded px-2 py-1"
+												value={focusDuration}
+												onChange={(e) =>
+													setFocusDuration(Number(e.target.value))
+												}
+											/>
+										</label>
+
+										<label className="block">
+											☕ Short break duration
+											<input
+												type="number"
+												className="mt-1 w-full bg-background border rounded px-2 py-1"
+												value={shortBreakDuration}
+												onChange={(e) =>
+													setShortBreakDuration(Number(e.target.value))
+												}
+											/>
+										</label>
+
+										<label className="block">
+											🎯 Long break duration
+											<input
+												type="number"
+												className="mt-1 w-full bg-background border rounded px-2 py-1"
+												value={longBreakDuration}
+												onChange={(e) =>
+													setLongBreakDuration(Number(e.target.value))
+												}
+											/>
+										</label>
+									</div>
 								</div>
 							)}
 							{activeTab === "tasks" && (
