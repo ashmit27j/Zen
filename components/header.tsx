@@ -206,7 +206,7 @@ export function Header() {
 								/>
 							</Button>
 						) : (
-							<a href="/login">
+							<a href="/auth">
 								<Button className="bg-white dark:bg-zinc-800 text-black dark:text-white rounded-md px-4">
 									Login
 								</Button>

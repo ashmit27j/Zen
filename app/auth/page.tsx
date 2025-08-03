@@ -32,7 +32,7 @@ export default function AuthPage() {
 			} else {
 				await createUserWithEmailAndPassword(auth, email, password);
 			}
-			router.push("/"); // ✅ Redirect to dashboard
+			router.push("/"); 
 		} catch (err: any) {
 			const errorMap: Record<string, string> = {
 				"auth/user-not-found": "No account found with this email.",
