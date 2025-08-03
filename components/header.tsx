@@ -13,9 +13,12 @@ import {
 	ChevronDown,
 	ChevronRight,
 	Bot,
+	User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/lib/firebaseConfig"; // Make sure this path matches your project structure
 import MuteToggle from "./muteToggle";
 import ThemeToggle from "./themeToggle";
 import SettingsDialog from "./settingsDialog";
@@ -26,7 +29,7 @@ import { usePathname } from "next/navigation";
 export function Header() {
 	const [showSettings, setShowSettings] = useState(false);
 	const [chatbotOpen, setChatbotOpen] = useState(false);
-	const isSignedIn = false; // 🔑 Replace with your auth state later
+	const [user] = useAuthState(auth);
 	const pathname = usePathname();
 
 	const isActive = (path: string) =>
@@ -192,18 +195,23 @@ export function Header() {
 							<Settings className="h-5 w-5" />
 						</Button>
 
-						{isSignedIn ? (
+						{user ? (
 							<Button
 								variant="ghost"
 								size="icon"
 								className="rounded-full overflow-hidden"
 							>
-								<Image
-									src="/user-avatar.jpg"
-									alt="Profile"
-									width={32}
-									height={32}
-								/>
+								{user.photoURL ? (
+									<Image
+										src={user.photoURL}
+										alt="Profile"
+										width={32}
+										height={32}
+										className="rounded-full"
+									/>
+								) : (
+									<User className="h-6 w-6" />
+								)}
 							</Button>
 						) : (
 							<a href="/auth">

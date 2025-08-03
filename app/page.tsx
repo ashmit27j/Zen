@@ -79,20 +79,6 @@ function AppContent() {
 	);
 }
 
-// export default function Home() {
-// 	return (
-// 		<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-// 			<SettingsProvider>
-// 				<TimerProvider>
-// 					<TaskProvider>
-// 						<AppContent />
-// 					</TaskProvider>
-// 				</TimerProvider>
-// 			</SettingsProvider>
-// 		</ThemeProvider>
-// 	);
-// }
-
 export default function Home() {
 	const router = useRouter();
 	const [loading, setLoading] = useState(true);

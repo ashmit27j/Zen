@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "react-hot-toast";
 import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
@@ -38,10 +39,13 @@ export default function AuthPage() {
 		try {
 			if (isLogin) {
 				await signInWithEmailAndPassword(auth, email, password);
+				const username = email.split("@")[0];
+				toast.success(`Welcome Back! ${username}`);
 			} else {
 				await createUserWithEmailAndPassword(auth, email, password);
+				toast.success("Account created successfully!");
 			}
-			router.push("/"); // ✅ Redirect to root
+			router.push("/"); 
 		} catch (err: any) {
 			const errorMap: Record<string, () => void> = {
 				"auth/user-not-found": () =>
@@ -65,15 +69,26 @@ export default function AuthPage() {
 
 	const handleForgotPassword = async () => {
 		clearErrors();
+
 		if (!email) {
 			setEmailError("Please enter your email first.");
 			return;
 		}
+
 		try {
-			await sendPasswordResetEmail(auth, email);
-			setEmailError("Password reset email sent!");
-		} catch {
-			setEmailError("Failed to send reset email. Check your email address.");
+			await sendPasswordResetEmail(auth, email, {
+				url: `${window.location.origin}/auth/reset-password`, // ✅ Custom reset page
+				handleCodeInApp: true,
+			});
+			toast.success("Password reset email sent!");
+		} catch (err: any) {
+			if (err.code === "auth/invalid-email") {
+				setEmailError("Invalid email address.");
+			} else if (err.code === "auth/user-not-found") {
+				setEmailError("No account found with this email.");
+			} else {
+				setEmailError("Failed to send reset email.");
+			}
 		}
 	};
 
