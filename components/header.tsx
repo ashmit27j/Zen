@@ -9,6 +9,7 @@ import {
 	GraduationCap,
 	Calculator,
 	ClipboardList,
+	Settings,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -16,14 +17,16 @@ import MuteToggle from "./muteToggle";
 import ThemeToggle from "./themeToggle";
 import SettingsDialog from "./settingsDialog";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import Image from "next/image";
 
 export function Header() {
 	const [showSettings, setShowSettings] = useState(false);
+	const isSignedIn = false; // 🔑 Replace with your auth state later
 
 	return (
 		<>
-			<header className="border-b border-zinc-200 dark:border-zinc-800 relative z-50">
-				<div className="container mx-auto px-4 py-4 flex justify-between items-center">
+			<header className="border-b border-zinc-200 dark:border-zinc-800 relative z-50 bg-background">
+				<div className="px-4 py-4 flex justify-between items-center w-full">
 					{/* Left side: Hamburger menu */}
 					<div className="flex items-center gap-3">
 						<Sheet>
@@ -67,7 +70,7 @@ export function Header() {
 						</h1>
 					</div>
 
-					{/* Right side: Toggles + Settings */}
+					{/* Right side: Toggles + Settings + Login/Profile */}
 					<div className="flex items-center gap-2">
 						<MuteToggle />
 						<ThemeToggle />
@@ -77,8 +80,27 @@ export function Header() {
 							onClick={() => setShowSettings(true)}
 							aria-label="Open settings"
 						>
-							<Menu className="h-5 w-5" />
+							<Settings className="h-5 w-5" />
 						</Button>
+
+						{isSignedIn ? (
+							<Button
+								variant="ghost"
+								size="icon"
+								className="rounded-full overflow-hidden"
+							>
+								<Image
+									src="/user-avatar.jpg"
+									alt="Profile"
+									width={32}
+									height={32}
+								/>
+							</Button>
+						) : (
+							<Button className="bg-white dark:bg-zinc-800 text-black dark:text-white rounded-md px-4">
+								Login
+							</Button>
+						)}
 					</div>
 				</div>
 			</header>
