@@ -39,7 +39,7 @@ interface Subject {
 	tasks: Task[];
 }
 
-export function TaskManager() {
+export default function TaskManager() {
 	const [subjects, setSubjects] = useState<Subject[]>([
 		{
 			id: "All",
@@ -152,13 +152,13 @@ export function TaskManager() {
 								</DropdownMenuContent>
 							</DropdownMenu>
 
-							<Badge
+							{/* <Badge
 								variant="outline"
 								className="ml-2 font-normal tracking-normal p-1 px-2"
 							>
 								{selectedSubject.tasks.filter((t) => !t.completed).length}{" "}
 								remaining
-							</Badge>
+							</Badge> */}
 						</CardTitle>
 					</div>
 				</CardHeader>

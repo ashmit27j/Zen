@@ -7,8 +7,9 @@ import { auth } from "@/lib/firebaseConfig";
 
 import { Header } from "@/components/header";
 import { PomodoroTimer } from "@/components/pomodoro-timer";
-import { TaskManager } from "@/components/task-manager";
+import TaskManager from "@/components/task-manager/task-manager";
 import { MusicPlayer } from "@/components/music-player";
+import { MotivationalQuote } from "@/components/motivational-quote";
 import { TimerProvider } from "@/context/timer-context";
 import { TaskProvider } from "@/context/task-context";
 import { ThemeProvider } from "next-themes";
@@ -38,12 +39,12 @@ function AppContent() {
 			</div>
 
 			{showTop && !isFullscreen && <Header />}
-
-			<div className="w-full h-full px-4 py-8 space-y-6">
+			{/* //=============================== */}
+			<div className="w-full h-[80vh] px-4 py-8 space-y-6">
 				{showTop && !isFullscreen && <TopBar />}
-
+				{/* container div for the inner boxes*/}
 				<div
-					className={`grid gap-6 w-full h-full ${
+					className={`grid gap-4 w-full h-full ${
 						isFullscreen ? "" : "md:grid-cols-2 lg:grid-cols-3"
 					}`}
 				>
@@ -69,6 +70,7 @@ function AppContent() {
 							<div className="md:col-span-2 lg:col-span-1 w-full h-full">
 								<div className="grid gap-6 h-full">
 									<MusicPlayer />
+									{/* <MotivationalQuote /> */}
 								</div>
 							</div>
 						</>
