@@ -22,7 +22,6 @@ export default function AuthPage() {
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
 
-	// Field-specific errors
 	const [emailError, setEmailError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 	const router = useRouter();
@@ -45,7 +44,7 @@ export default function AuthPage() {
 				await createUserWithEmailAndPassword(auth, email, password);
 				toast.success("Account created successfully!");
 			}
-			router.push("/"); 
+			router.push("/");
 		} catch (err: any) {
 			const errorMap: Record<string, () => void> = {
 				"auth/user-not-found": () =>
@@ -77,7 +76,7 @@ export default function AuthPage() {
 
 		try {
 			await sendPasswordResetEmail(auth, email, {
-				url: `${window.location.origin}/auth/reset-password`, // ✅ Custom reset page
+				url: `${window.location.origin}/auth/reset-password`,
 				handleCodeInApp: true,
 			});
 			toast.success("Password reset email sent!");
@@ -103,13 +102,13 @@ export default function AuthPage() {
 	};
 
 	return (
-		<div className="flex min-h-screen">
+		<div className="flex min-h-screen bg-zinc-950 text-zinc-100">
 			{/* Left Section */}
-			<div className="hidden md:flex flex-col justify-between w-1/2 bg-muted p-10 dark:bg-zinc-900">
-				<h1 className="text-lg font-semibold flex items-center gap-2">
+			<div className="hidden md:flex flex-col justify-between w-1/2 bg-zinc-900 p-10">
+				<h1 className="text-lg font-semibold flex items-center gap-2 text-zinc-100">
 					⌘ Zen Inc
 				</h1>
-				<blockquote className="text-sm text-muted-foreground">
+				<blockquote className="text-sm text-zinc-400">
 					“This app has saved me countless hours and helped me stay productive.”
 				</blockquote>
 			</div>
@@ -119,7 +118,7 @@ export default function AuthPage() {
 				{/* Toggle Button */}
 				<Button
 					variant="link"
-					className="absolute top-6 right-6 font-medium text-black dark:text-white"
+					className="absolute top-6 right-6 font-semibbold text-zinc-100"
 					onClick={() => {
 						clearErrors();
 						setIsLogin(!isLogin);
@@ -129,20 +128,24 @@ export default function AuthPage() {
 				</Button>
 
 				<div className="w-full max-w-sm space-y-6">
-					<h2 className="text-2xl font-semibold text-center">
+					<h2 className="text-2xl font-semibold text-center text-zinc-100">
 						{isLogin ? "Welcome back" : "Create an account"}
 					</h2>
 
 					{/* Email Field */}
 					<div>
-						<Label htmlFor="email">Email</Label>
+						<Label htmlFor="email" className="text-zinc-300">
+							Email
+						</Label>
 						<Input
 							id="email"
 							type="email"
 							placeholder="name@example.com"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
-							className={emailError ? "border-red-500 focus:ring-red-500" : ""}
+							className={`bg-zinc-900 text-zinc-100 border-zinc-700 ${
+								emailError ? "border-red-500 focus:ring-red-500" : ""
+							}`}
 						/>
 						{emailError && (
 							<p className="text-red-500 text-xs mt-1">{emailError}</p>
@@ -151,16 +154,18 @@ export default function AuthPage() {
 
 					{/* Password Field */}
 					<div>
-						<Label htmlFor="password">Password</Label>
+						<Label htmlFor="password" className="text-zinc-300">
+							Password
+						</Label>
 						<Input
 							id="password"
 							type="password"
 							placeholder="••••••••"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
-							className={
+							className={`bg-zinc-900 text-zinc-100 border-zinc-700 ${
 								passwordError ? "border-red-500 focus:ring-red-500" : ""
-							}
+							}`}
 						/>
 						{passwordError && (
 							<p className="text-red-500 text-xs mt-1">{passwordError}</p>
@@ -168,7 +173,7 @@ export default function AuthPage() {
 					</div>
 
 					<Button
-						className="w-full bg-black text-white dark:bg-white dark:text-black"
+						className="w-full bg-zinc-100 text-zinc-900 hover:bg-zinc-200"
 						onClick={handleAuth}
 						disabled={loading}
 					>
@@ -178,28 +183,28 @@ export default function AuthPage() {
 					{isLogin && (
 						<button
 							onClick={handleForgotPassword}
-							className="text-muted-foreground text-sm"
+							className="text-zinc-400 text-sm"
 						>
 							Forgot Password?
 						</button>
 					)}
 
 					<div className="flex items-center">
-						<div className="flex-1 border-t" />
-						<span className="px-2 text-xs text-muted-foreground">OR</span>
-						<div className="flex-1 border-t" />
+						<div className="flex-1 border-t border-zinc-700" />
+						<span className="px-2 text-xs text-zinc-400">OR</span>
+						<div className="flex-1 border-t border-zinc-700" />
 					</div>
 
 					<div className="space-y-2">
 						<Button
 							variant="outline"
-							className="w-full flex items-center gap-2"
+							className="w-full flex items-center gap-2 border-zinc-700 text-zinc-100 bg-zinc-900 hover:bg-zinc-800"
 						>
 							<Github className="w-4 h-4" /> Continue with GitHub
 						</Button>
 						<Button
 							variant="outline"
-							className="w-full flex items-center gap-2"
+							className="w-full flex items-center gap-2 border-zinc-700 text-zinc-100 bg-zinc-900 hover:bg-zinc-800"
 							onClick={handleGoogleLogin}
 						>
 							<Mail className="w-4 h-4" /> Continue with Google

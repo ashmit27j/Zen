@@ -19,13 +19,13 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebaseConfig"; // Make sure this path matches your project structure
-import MuteToggle from "./muteToggle";
+// import MuteToggle from "./muteToggle";
 import ThemeToggle from "./themeToggle";
 import SettingsDialog from "./settingsDialog";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-
+import { ProfileDropdown } from "./ui/profile-dropdown";
 export function Header() {
 	const [showSettings, setShowSettings] = useState(false);
 	const [chatbotOpen, setChatbotOpen] = useState(false);
@@ -184,7 +184,7 @@ export function Header() {
 
 					{/* Right side: Toggles + Settings + Login/Profile */}
 					<div className="flex items-center gap-2">
-						<MuteToggle />
+						{/* <MuteToggle /> */}
 						<ThemeToggle />
 						<Button
 							variant="ghost"
@@ -195,24 +195,72 @@ export function Header() {
 							<Settings className="h-5 w-5" />
 						</Button>
 
+						{/* {user ? (
+							// Add local state for dropdown visibility
+							(() => {
+								const [dropdownOpen, setDropdownOpen] = useState(false);
+								return (
+									<div className="relative">
+										<Button
+											variant="ghost"
+											size="icon"
+											className="rounded-full overflow-hidden"
+											aria-label="Account"
+											onClick={() => setDropdownOpen((open) => !open)}
+											onMouseEnter={() => setDropdownOpen(true)}
+											onMouseLeave={() => setDropdownOpen(false)}
+											id="profile-menu-trigger"
+										>
+											{user.photoURL ? (
+												<Image
+													src={user.photoURL}
+													alt="Profile"
+													width={32}
+													height={32}
+													className="rounded-full"
+												/>
+											) : (
+												<User className="h-6 w-6" />
+											)}
+										</Button>
+										{dropdownOpen && (
+											<div
+												className="absolute right-0 mt-2 w-40 bg-white dark:bg-zinc-800 rounded shadow-lg z-50"
+												onMouseLeave={() => setDropdownOpen(false)}
+												onMouseEnter={() => setDropdownOpen(true)}
+											>
+												<div className="px-4 py-2 text-sm text-zinc-700 dark:text-zinc-200">
+													{user.displayName || user.email}
+												</div>
+												<hr className="my-1 border-zinc-200 dark:border-zinc-700" />
+												<a href="/profile">
+													<div className="px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 cursor-pointer text-sm">
+														Profile
+													</div>
+												</a>
+												<button
+													className="w-full text-left px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 cursor-pointer text-sm"
+													style={{ color: "tomato" }}
+													onClick={() => auth.signOut()}
+												>
+													Logout
+												</button>
+											</div>
+										)}
+									</div>
+								);
+							})()
+						) : (
+							<a href="/auth">
+								<Button className="bg-white dark:bg-zinc-800 text-black dark:text-white rounded-md px-4">
+									Login
+								</Button>
+							</a>
+						)} */}
 						{user ? (
-							<Button
-								variant="ghost"
-								size="icon"
-								className="rounded-full overflow-hidden"
-							>
-								{user.photoURL ? (
-									<Image
-										src={user.photoURL}
-										alt="Profile"
-										width={32}
-										height={32}
-										className="rounded-full"
-									/>
-								) : (
-									<User className="h-6 w-6" />
-								)}
-							</Button>
+							// We need a state variable here, but the original component structure is an anti-pattern.
+							// Let's create a proper component for this.
+							<ProfileDropdown user={user} auth={auth} />
 						) : (
 							<a href="/auth">
 								<Button className="bg-white dark:bg-zinc-800 text-black dark:text-white rounded-md px-4">
