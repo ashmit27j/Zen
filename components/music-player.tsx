@@ -61,11 +61,12 @@ export function MusicPlayer() {
 	};
 
 	return (
+		// history feature
 		<Card className="bg-gradient-to-br from-zinc-50 via-zinc-95 to-zinc-160 dark:from-[#121212] dark:via-[#171717] dark:to-[#19191a]">
 			<CardHeader className="pb-3">
 				<div className="flex items-center justify-between w-full">
 					<CardTitle className="text-xl font-medium tracking-normal">
-						Focus Music
+						Miniplayer
 					</CardTitle>
 					{embedId && (
 						<Button

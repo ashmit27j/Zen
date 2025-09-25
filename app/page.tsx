@@ -25,7 +25,7 @@ function AppContent() {
 	useKeyboardShortcuts();
 
 	return (
-		<div className="w-screen min-h-screen bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-background dark:to-[#0a0a0a] transition-colors duration-300 relative">
+		<div className="w-screen min-h-screen overflow-hidden bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-background dark:to-[#0a0a0a] transition-colors duration-300 relative">
 			<div className="absolute bottom-5 right-5 z-50 bg-card">
 				<Button
 					variant="ghost"
@@ -41,12 +41,13 @@ function AppContent() {
 
 			<div className="w-full h-full px-4 py-8 space-y-6">
 				{showTop && !isFullscreen && <TopBar />}
-
+				{/* this it the container div */}
 				<div
-					className={`grid gap-6 w-full h-full ${
+					className={`grid gap-6 w-full h-[calc(100vh-250px)] ${
 						isFullscreen ? "" : "md:grid-cols-2 lg:grid-cols-3"
 					}`}
 				>
+					{/* below is the pomodoro div */}
 					<div
 						className={`w-full h-full ${
 							isFullscreen
