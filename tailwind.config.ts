@@ -62,6 +62,7 @@ const config: Config = {
 					border: "hsl(var(--sidebar-border))",
 					ring: "hsl(var(--sidebar-ring))",
 				},
+				cta: "#333333", // Added CTA color
 			},
 			borderRadius: {
 				lg: "var(--radius)",

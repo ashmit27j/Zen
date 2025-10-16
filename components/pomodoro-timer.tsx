@@ -87,12 +87,12 @@ export function PomodoroTimer({
 							<Tabs
 								defaultValue="focus"
 								value={timerMode}
-								className="w-full mb-6"
+								className="w-full"
 								onValueChange={(value) =>
 									setTimerMode(value as "focus" | "shortBreak" | "longBreak")
 								}
 							>
-								<TabsList className="grid grid-cols-3 tracking-normal">
+								<TabsList className="grid grid-cols-3 tracking-normal bg-cta">
 									<TabsTrigger value="focus">Focus Time</TabsTrigger>
 									<TabsTrigger value="shortBreak">Short Break</TabsTrigger>
 									<TabsTrigger value="longBreak">Long Break</TabsTrigger>
