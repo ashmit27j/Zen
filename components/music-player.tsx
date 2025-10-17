@@ -61,10 +61,11 @@ export function MusicPlayer() {
 	};
 
 	return (
+		// history feature
 		<Card className="bg-gradient-to-br from-zinc-50 via-zinc-95 to-zinc-160 dark:from-[#121212] dark:via-[#171717] dark:to-[#19191a]">
-			<CardHeader className="pb-3">
+			<CardHeader className="pb-4">
 				<div className="flex items-center justify-between w-full">
-					<CardTitle className="text-xl font-title tracking-wide ">
+					<CardTitle className="text-xl font-medium tracking-normal">
 						Miniplayer
 					</CardTitle>
 					{embedId && (
@@ -92,7 +93,7 @@ export function MusicPlayer() {
 						></iframe>
 					</div>
 				) : (
-					<div className="flex gap-2">
+					<div className="flex gap-[1rem]">
 						<Input
 							placeholder="Paste YouTube link"
 							value={videoUrl}

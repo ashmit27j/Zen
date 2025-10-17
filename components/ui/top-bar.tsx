@@ -86,9 +86,9 @@ export function TopBar() {
 			: formattedTime;
 
 	return (
-		<div className="flex items-center gap-5 justify-between w-full">
+		<div className="flex items-center gap-4 justify-between w-full bg-blue-500">
 			{/* Shortcut Section */}
-			<div className="flex items-center gap-5">
+			<div className="flex items-center gap-4">
 				{links.map((link, index) => (
 					<div
 						key={index}

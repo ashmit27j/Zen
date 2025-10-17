@@ -42,7 +42,7 @@ export function Header() {
 			<header className="border-b border-zinc-200 dark:border-zinc-800 relative z-50 bg-background">
 				<div className="px-4 py-4 flex justify-between items-center w-full">
 					{/* Left side: Hamburger menu */}
-					<div className="flex items-center gap-3">
+					<div className="flex items-center gap-4">
 						<Sheet>
 							<SheetTrigger asChild>
 								<Button variant="ghost" size="icon" aria-label="Open menu">

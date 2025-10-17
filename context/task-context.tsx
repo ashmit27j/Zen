@@ -1,17 +1,17 @@
 "use client"
 
-import type React from "react"
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 
-import { createContext, useContext, useState, useEffect } from "react"
-
-interface Task {
+// Define your Task type
+export type Task = {
   id: string
   text: string
   completed: boolean
-  tag?: string
+  tag: string
 }
 
-interface TaskContextType {
+// Define the context type
+type TaskContextType = {
   tasks: Task[]
   addTask: (task: Task) => void
   toggleTask: (id: string) => void
@@ -19,27 +19,42 @@ interface TaskContextType {
   reorderTasks: (fromIndex: number, toIndex: number) => void
 }
 
+// Create the context with undefined as default
 const TaskContext = createContext<TaskContextType | undefined>(undefined)
 
-export function TaskProvider({ children }: { children: React.ReactNode }) {
-  const [tasks, setTasks] = useState<Task[]>(() => {
-    if (typeof window !== "undefined") {
-      const savedTasks = localStorage.getItem("zen-tasks")
-      return savedTasks ? JSON.parse(savedTasks) : []
-    }
-    return []
-  })
+// Export the provider component
+export function TaskProvider({ children }: { children: ReactNode }) {
+  const [tasks, setTasks] = useState<Task[]>([])
+  const [isLoaded, setIsLoaded] = useState(false)
 
+  // Load tasks from localStorage on mount
   useEffect(() => {
-    localStorage.setItem("zen-tasks", JSON.stringify(tasks))
-  }, [tasks])
+    const storedTasks = window.localStorage.getItem("tasks")
+    if (storedTasks !== null) {
+      try {
+        setTasks(JSON.parse(storedTasks))
+      } catch (error) {
+        console.error("Error parsing tasks from localStorage:", error)
+      }
+    }
+    setIsLoaded(true)
+  }, [])
+
+  // Save tasks to localStorage whenever they change
+  useEffect(() => {
+    if (isLoaded) {
+      window.localStorage.setItem("tasks", JSON.stringify(tasks))
+    }
+  }, [tasks, isLoaded])
 
   const addTask = (task: Task) => {
     setTasks((prev) => [...prev, task])
   }
 
   const toggleTask = (id: string) => {
-    setTasks((prev) => prev.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task)))
+    setTasks((prev) =>
+      prev.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task))
+    )
   }
 
   const deleteTask = (id: string) => {
@@ -48,28 +63,21 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
 
   const reorderTasks = (fromIndex: number, toIndex: number) => {
     setTasks((prev) => {
-      const newTasks = [...prev]
-      const [removed] = newTasks.splice(fromIndex, 1)
-      newTasks.splice(toIndex, 0, removed)
-      return newTasks
+      const updated = [...prev]
+      const [removed] = updated.splice(fromIndex, 1)
+      updated.splice(toIndex, 0, removed)
+      return updated
     })
   }
 
   return (
-    <TaskContext.Provider
-      value={{
-        tasks,
-        addTask,
-        toggleTask,
-        deleteTask,
-        reorderTasks,
-      }}
-    >
+    <TaskContext.Provider value={{ tasks, addTask, toggleTask, deleteTask, reorderTasks }}>
       {children}
     </TaskContext.Provider>
   )
 }
 
+// Export the custom hook
 export function useTask() {
   const context = useContext(TaskContext)
   if (context === undefined) {
